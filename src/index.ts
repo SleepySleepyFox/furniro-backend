@@ -1,20 +1,19 @@
 import express from "express"
 import cors from "cors"
-import db from "./config/Db"
+import userRoutes from "./routes/UserRoutes"
+import db from "./config/db"
 
 const app = express()
 const PORT = 5000
 
-app.get("/", (req, res) => {
-    res.send("Test")
+app.use(cors())
+app.use(express.json())
+db()
+app.listen(PORT, () => {
+console.log(`Server is running on port: ${PORT}`)
 })
 
-const startServer = () => {
-    db()
-    app.use(cors())
-    app.listen(PORT, () => {
-    console.log(`Server is running on port: ${PORT}`)
-})
-}
+app.use('/api/', userRoutes)
 
-startServer()
+
+
